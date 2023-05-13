@@ -30,24 +30,8 @@ nav ul li a {
 }
 
 nav ul li:hover {
-  transform: translateY(-5px);
-}
-
-nav ul li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -5px;
-  width: 100%;
-  height: 5px;
-  background-color: #fff;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease;
-}
-
-nav ul li:hover::before {
-  transform: scaleX(1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.8);
 }
 
 h1, h2, h3 {
@@ -109,4 +93,6 @@ li {
 
 li:hover {
   transform: translateY(-5px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.8);
 }
