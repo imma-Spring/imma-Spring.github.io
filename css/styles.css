@@ -1,33 +1,112 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-  }
-  
-  h1 {
-    color: #333;
-  }
-  
-  p {
-    color: #666;
-    line-height: 1.5;
-  }
-  
-  .languages {
-    margin-top: 30px;
-  }
-  
-  .languages ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .languages li {
-    display: inline-block;
-    margin: 5px;
-    padding: 8px 12px;
-    background-color: #f2f2f2;
-    border-radius: 5px;
-    font-size: 14px;
-  }
-  
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #222;
+  color: #fff;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin-right: 10px;
+  transition: transform 0.3s ease;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+nav ul li:hover {
+  transform: translateY(-5px);
+}
+
+nav ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 100%;
+  height: 5px;
+  background-color: #fff;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+nav ul li:hover::before {
+  transform: scaleX(1);
+}
+
+h1, h2, h3 {
+  color: #fff;
+}
+
+section {
+  margin-bottom: 40px;
+}
+
+footer {
+  background-color: #333;
+  padding: 20px;
+  text-align: center;
+}
+
+#languages {
+  margin-top: 30px;
+}
+
+#languages ul,
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#languages li,
+li {
+  display: inline-block;
+  margin: 5px;
+  padding: 8px 12px;
+  background-color: #555;
+  border-radius: 5px;
+  font-size: 14px;
+  border: 2px solid transparent;
+  transition: transform 0.3s ease;
+}
+
+#languages li::before {
+  color: #fff;
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
+#projects li {
+  margin-bottom: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  padding: 8px 12px;
+  box-sizing: border-box; /* add this property */
+  width: calc(50% - 10px);
+}
+
+#projects li:last-of-type {
+  margin-right: 0; /* remove margin from last element */
+}
+
+li:hover {
+  transform: translateY(-5px);
+}
