@@ -1,60 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Personal Homepage</title>
-  <link rel="stylesheet" href="css/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chronos - A 2D Game Engine in Java</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/index.css">
+    <script src="js/script.js" defer></script>
 </head>
 <body>
-  <header>
-    <h1>Welcome to My Personal Homepage</h1>
-    <nav>
-      <ul>
-        <li><a href="#about">About Me</a></li>
-        <li><a href="#languages">Favorite Languages</a></li>
-        <li><a href="#projects">My Projects</a></li>
-      </ul>
-    </nav>
-  </header>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#download">Download</a></li>
+                <li><a href="docs.html">Documentation</a></li>
+                <li><a href="#community">Community</a></li>
+                <li><a href="#contribute">Contribute</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <section id="about">
-    <h2>About Me</h2>
-    <p>I love coding and exploring programming languages. I am passionate about learning new technologies and creating useful applications.</p>
-  </section>
+    <section id="hero">
+        <div class="container">
+            <h1>Chronos</h1>
+            <h2>A 2D game engine in Java</h2>
+            <a href="#features" class="btn">Get Started</a>
+        </div>
+    </section>
 
-  <section id="languages">
-    <h2>Favorite Programming Languages</h2>
-    <ul>
-      <li>Java</li>
-      <li>C++</li>
-      <li>C</li>
-      <li>TIBasic</li>
-      <!-- Add more programming languages here -->
-    </ul>
-  </section>
+    <section id="features">
+        <div class="container">
+            <h2>Features</h2>
+            <ul>
+                <li>Game Loop: The engine implements a game loop that handles updating game logic and rendering frames.</li>
+                <li>Input Handling: Provides an input system for capturing user interactions.</li>
+                <li>Sprite Rendering: Supports rendering of sprites onto the screen.</li>
+                <li>Collision Detection: Implements basic collision detection between game objects.</li>
+                <li>Flexible Body Management: Allows for the addition, removal, and updating of game objects (bodies).</li>
+            </ul>
+        </div>
+    </section>
 
-  <section id="projects">
-    <h2>My Projects</h2>
-    <ul>
-      <li>
-        <h3>RAC</h3>
-        <p>A very basic programming language based off rust, asm, and c.
-            This was done for my AP Computer Science A final project.
-        </p>
-      </li>
-      <li>
-        <h3>Angle</h3>
-        <p>An expanded verson of RAC that supports arrays and more.
-            I plan on updating it for a bit.
-        </p>
-      </li>
-      <!-- Add more projects here -->
-    </ul>
-  </section>
+    <section id="download">
+        <div class="container">
+            <h2>Download</h2>
+            <p>Download the entire game engine as a ZIP file:</p>
+            <a href="https://github.com/imma-Spring/Chronos/archive/refs/heads/main.zip" class="btn">Download Now</a>
+        </div>
+    </section>
 
-  <footer>
-    <p>&copy; 2023 Imma-Spring. All rights reserved.</p>
-  </footer>
+    <section id="docs">
+        <div class="container">
+            <h2>Documentation</h2>
+            <p>Explore the documentation to get started with Chronos Engine:</p>
+            <a href="docs.html" class="btn">Read Documentation</a>
+        </div>
+    </section>
+
+    <section id="community">
+        <div class="container">
+            <h2>Community</h2>
+            <p>Join our community to connect with other developers and get support:</p>
+            <a href="https://github.com/imma-Spring/Chronos/discussions" class="btn">Join Community</a>
+        </div>
+    </section>
+
+    <section id="contribute">
+        <div class="container">
+            <h2>Contribute</h2>
+            <p>Help us improve Chronos Engine by contributing:</p>
+            <a href="https://github.com/imma-Spring/Chronos/blob/main/CONTRIBUTING.md" class="btn">Contribute Now</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Chronos Engine</p>
+        </div>
+    </footer>
 </body>
 </html>

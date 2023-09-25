@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chronos Engine Documentation</title>
+    <link rel="stylesheet" href="css/styles.css"> <!-- Add your stylesheets -->
+</head>
+<body>
+    <header>
+        <h1>Chronos Engine Documentation</h1>
+        <nav>
+            <ul>
+                <li><a href="#getting-started">Getting Started</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#kinematic-body">Using the KinematicBody Class</a></li>
+                <li><a href="#static-body">Using the StaticBody Class</a></li>
+                <li><a href="#signal">Using the Signal Class</a></li>
+                <li><a href="#contributing">Contributing</a></li>
+                <li><a href="#code-of-conduct">Code of Conduct</a></li>
+                <li><a href="#license">License</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    
+
+    <section id="getting-started">
+        <h2>Getting Started</h2>
+        <p>Welcome to the Chronos Engine documentation! This section will guide you through the initial steps to set up and use the engine for your 2D game development projects.</p>
+        <ol>
+            <li>Download the <a href="https://github.com/imma-Spring/Chronos/archive/refs/heads/main.zip">zip</a> from the github repository</li>
+            <li>Unzip the downloaded zip</li>
+            <li>Include Chronos as in you project</li>
+        </ol>
+    </section>
+    
+    <section id="features">
+        <h2>Features</h2>
+        <p>Explore the powerful features that the Chronos Engine offers to simplify your 2D game development process.</p>
+        <ul>
+            <li>Game Loop: The engine implements a game loop that handles updating game logic and rendering frames.</li>
+            <li>Input Handling: Provides an input system for capturing user interactions.</li>
+            <li>Sprite Rendering: Supports rendering of sprites onto the screen.</li>
+            <li>Collision Detection: Implements basic collision detection between game objects.</li>
+            <li>Flexible Body Management: Allows for the addition, removal, and updating of game objects (bodies).</li>
+        </ul>
+    </section>
+    
+    <section id="kinematic-body">
+        <h2>Using the KinematicBody Class</h2>
+        <p>The <code>KinematicBody</code> class is designed for game objects with predefined motion. It inherits properties and methods from the <code>Body</code> class and provides specific behavior for certain types of game objects.</p>
+        <pre><code>
+            public class MovingPlatform extends KinematicBody {
+
+                private float speed;
+                private boolean directionRight;
+            
+                public MovingPlatform(Sprite sprite, Vector3&lt;Float&gt; position, String name, float speed) {
+                    super(sprite, position, name);
+                    this.speed = speed;
+                    this.directionRight = true;
+                }
+            
+                @Override
+                public void start() {
+                    // Initialization logic for the moving platform
+                }
+            
+                @Override
+                public void update(float dt) {
+                    // Update logic for moving platform
+                    if (directionRight) {
+                        position.x += speed * dt;
+                    } else {
+                        position.x -= speed * dt;
+                    }
+                }
+            }
+        </code></pre>
+    </section>
+    
+    <section id="static-body">
+        <h2>Using the StaticBody Class</h2>
+        <p>The <code>StaticBody</code> class represents game objects that remain stationary in the game world. It provides specific behavior for static game objects.</p>
+        <pre><code>
+            public class Obstacle extends StaticBody {
+
+                public Obstacle(Sprite sprite, Vector3&lt;Float&gt; position, String name) {
+                    super(sprite, position, name);
+                }
+            
+                @Override
+                public void start() {
+                    // Initialization logic for the obstacle
+                }
+            
+                @Override
+                public void update(float dt) {
+                    // No update logic for a static obstacle
+                }
+            }
+        </code></pre>
+    </section>
+    
+    <section id="signal">
+        <h2>Using the Signal Class</h2>
+        <p>The <code>Signal</code> class provides a simple messaging system that allows different parts of the game to communicate and exchange information.</p>
+        <pre><code>
+            // Sending a signal
+            Signal.sendSignal("player_hit", player, damage);
+
+            // Retrieving a signal
+            Optional&lt;List&lt;Object[]&gt;&gt; hitSignal = Signal.getSignal("player_hit");
+            if (hitSignal.isPresent()) {
+                List&lt;Object[]&gt; packetsList = hitSignal.get();
+                for (Object[] packets : packetsList) {
+                    // Process packets
+                }
+            }
+        </code></pre>
+    </section>
+    
+    <section id="contributing">
+        <h2>Contributing</h2>
+        <p>Thank you for considering contributing to the Chronos Engine! You can contribute by reporting issues, suggesting improvements, or submitting pull requests.</p>
+        <h3>Bugs</h3>
+        <p><strong>Describe the bug</strong>: A clear and concise description of what the bug is.</p>
+        <p><strong>To Reproduce</strong>: Steps to reproduce the behavior:</p>
+        <ol>
+            <li>Go to '...'</li>
+            <li>Click on '...'</li>
+            <li>Scroll down to '...'</li>
+            <li>See error</li>
+        </ol>
+        <p><strong>Expected behavior</strong>: A clear and concise description of what you expected to happen.</p>
+        <!-- Add more detailed instructions and guidelines for contributing to the Chronos Engine. -->
+    </section>
+    
+    <section id="code-of-conduct">
+        <h2>Code of Conduct</h2>
+        <p>Ensure a positive and inclusive community by following our Code of Conduct.</p>
+        <!-- Add the code of conduct guidelines and policies here. -->
+    </section>
+    
+    <section id="license">
+        <h2>License</h2>
+        <p>This project is licensed under the MIT License - see the <a href="https://github.com/imma-Spring/Chronos/blob/main/LICENSE">LICENSE</a> file for details.</p>
+        <!-- Add any additional information about the license or usage rights. -->
+    </section>
+    
+
+    <footer>
+        <p>&copy; 2023 Chronos Engine</p>
+    </footer>
+
+    <script src="js/script.js" defer></script> <!-- Add your scripts -->
+</body>
+</html>
