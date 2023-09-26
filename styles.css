@@ -116,7 +116,7 @@ footer {
 #hero {
     padding: 20px;
     position: relative;
-    background-image: url('../images/pong.svg'); /* Path to your SVG file */
+    background-image: url('pong.svg'); /* Path to your SVG file */
     background-size: cover;
     background-position: center;
 }
