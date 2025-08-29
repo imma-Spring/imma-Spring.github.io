@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      posts.forEach(post => {
+      posts.reverse().forEach(post => {
         if (!post.title || !post.content) return;
         const id = post.title.replace(/\s+/g, "-").toLowerCase();
 
