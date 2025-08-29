@@ -29,14 +29,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function getLineColor() {
     return document.body.classList.contains("light")
-      ? "rgba(0,0,0,0.05)"
-      : "rgba(255,255,255,0.05)";
+      ? "rgba(0,0,0,0.3)"
+      : "rgba(255,255,255,0.3)";
   }
 
   function getDotColor() {
     return document.body.classList.contains("light")
-      ? "rgba(0,0,0,0.1)"
-      : "rgba(255,255,255,0.12)";
+      ? "rgba(0,0,0,0.5)"
+      : "rgba(255,255,255,0.52)";
   }
 
   const GRAVITY_FORCE = 0.002;
