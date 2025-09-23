@@ -262,4 +262,7 @@ tr:hover {
 #sets-container button:hover {
   background: #338be6;
 }
+#weight-unit {
+  white-space: nowrap; /* keep unit together with preceding text */
+}
 
