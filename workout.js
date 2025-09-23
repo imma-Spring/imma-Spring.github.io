@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const dateInput = document.getElementById("date");
   const exerciseInput = document.getElementById("exercise");
-  const setsInput = document.getElementById("sets");
   const repsInput = document.getElementById("reps");
   const weightInput = document.getElementById("weight");
   const weightUnitSpan = document.getElementById("weight-unit");
@@ -23,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let pendingSets = [];
   let chart = null;
   let lastDate = new Date().toISOString().split("T")[0];
-  
+
   dateInput.value = lastDate;
   updateUnitLabels();
   renderTable();
@@ -32,24 +31,15 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Add a single set to pending ---
   addSetBtn?.addEventListener("click", () => {
     const reps = parseInt(repsInput.value, 10);
-    const weight = parseFloat(weightInput.value);
+    let weight = parseFloat(weightInput.value);
     if (!reps || isNaN(weight)) return;
+
+    // Convert input to kg if currently in lbs
+    if (unit === "lb") weight = weight / KG_TO_LB;
 
     const set = { reps, weight };
     pendingSets.push(set);
-
-    const li = document.createElement("li");
-    li.textContent = `${reps} reps @ ${weight} ${unit}`;
-
-    const removeBtn = document.createElement("button");
-    removeBtn.textContent = "✕";
-    removeBtn.addEventListener("click", () => {
-      pendingSets = pendingSets.filter(s => s !== set);
-      pendingSetsUl.removeChild(li);
-    });
-
-    li.appendChild(removeBtn);
-    pendingSetsUl.appendChild(li);
+    renderPendingSets();
 
     repsInput.value = "";
     weightInput.value = "";
@@ -67,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const newWorkout = {
       date,
       exercise,
-      sets: [...pendingSets] // copy pending sets
+      sets: [...pendingSets] // stored internally in kg
     };
 
     workouts.push(newWorkout);
@@ -96,19 +86,13 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    // Convert all pending sets
-    pendingSets = pendingSets.map(s => ({
-      reps: s.reps,
-      weight: unit === "kg" ? s.weight / KG_TO_LB : s.weight * KG_TO_LB
-    }));
-
     renderPendingSets();
     updateUnitLabels();
     renderTable();
     if (exerciseSelect.value) renderChart(exerciseSelect.value);
   });
 
-  // --- Update Exercise Dropdown ---
+  // --- Exercise dropdown change ---
   exerciseSelect?.addEventListener("change", (e) => {
     renderChart(e.target.value);
   });
@@ -120,8 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     workouts.forEach((w, idx) => {
       const tr = document.createElement("tr");
-
-      const total = w.sets.reduce((sum, s) => sum + (s.reps * s.weight), 0);
+      const total = w.sets.reduce((sum, s) => sum + s.reps * s.weight, 0);
       const convertedTotal = convertWeight(total);
 
       tr.innerHTML = `
@@ -134,7 +117,6 @@ document.addEventListener("DOMContentLoaded", () => {
       workoutTableBody.appendChild(tr);
     });
 
-    // Delete buttons
     document.querySelectorAll(".delete-btn").forEach(btn => {
       btn.addEventListener("click", e => {
         const index = parseInt(e.target.dataset.index, 10);
@@ -152,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
     pendingSetsUl.innerHTML = "";
     pendingSets.forEach((s, i) => {
       const li = document.createElement("li");
-      li.textContent = `${s.reps} reps @ ${s.weight.toFixed(1)} ${unit}`;
+      li.textContent = `${s.reps} reps @ ${convertWeight(s.weight)} ${unit}`;
       const removeBtn = document.createElement("button");
       removeBtn.textContent = "✕";
       removeBtn.addEventListener("click", () => {
