@@ -11,7 +11,6 @@
 
 <body>
   <header>
-    <h1>Workout</h1>
     <nav>
       <a href="https://github.com/imma-Spring" target="_blank">GitHub</a>
       <a href="index.html">Home</a>
@@ -21,53 +20,62 @@
   </header>
 
   <main>
-    <h1>Workout Tracker</h1>
+    <article>
+      <h1>Workout Tracker</h1>
+      <form id="workout-form" class="workout-form">
+        <label>
+          Date:
+          <input type="date" id="date" required>
+        </label>
 
-    <!-- Workout Input Form -->
-    <form id="workout-form">
-      <label for="date">Date:</label>
-      <input type="date" id="date" name="date">
+        <label>
+          Exercise:
+          <input type="text" id="exercise" required>
+        </label>
 
-      <label for="exercise">Exercise:</label>
-      <input type="text" id="exercise" name="exercise" required>
+        <div id="sets-container" class="sets-container">
+          <label>
+            Reps:
+            <input type="number" id="reps" min="1">
+          </label>
 
-      <label for="sets">Sets:</label>
-      <input type="number" id="sets" name="sets" min="1" required>
+          <label>
+            Weight (<span id="weight-unit">kg</span>):
+            <input type="number" id="weight" min="0" step="0.1">
+          </label>
 
-      <label for="reps">Reps:</label>
-      <input type="number" id="reps" name="reps" min="1" required>
+          <button type="button" id="add-set">Add Set</button>
+        </div>
 
-      <label id="weight-label" for="weight">Weight (kg):</label>
-      <input type="number" id="weight" name="weight" min="0" step="0.1" required>
+        <ul id="pending-sets"></ul>
 
-      <button type="submit">Add Workout</button>
-    </form>
+        <button type="submit">Save Workout</button>
+      </form>
 
-    <button id="unit-toggle">Switch to lb</button>
+      <button id="unit-toggle">Switch to lb</button>
 
-    <!-- Workout Table -->
-    <h2>Logged Workouts</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Exercise</th>
-          <th>Sets/Reps/Weight</th>
-          <th>Total</th>
-          <th>Delete</th>
-        </tr>
-      </thead>
-      <tbody id="workout-table-body"></tbody>
-    </table>
+      <h2>Logged Workouts</h2>
+      <table id="workout-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Exercise</th>
+            <th>Volume</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
 
-    <!-- Progression Graph -->
-    <h2>Progression</h2>
-    <label for="exercise-select">Choose Exercise:</label>
-    <select id="exercise-select">
-      <option value="">-- Select Exercise --</option>
-    </select>
-
-    <canvas id="progressChart" width="600" height="300"></canvas>
+      <h2>Progression</h2>
+      <label>
+        Select Exercise:
+        <select id="exercise-select">
+          <option value="">-- choose an exercise --</option>
+        </select>
+      </label>
+      <canvas id="progressChart" width="400" height="200"></canvas>
+    </article>
   </main>
   <script src="background.js"></script>
 </body>
