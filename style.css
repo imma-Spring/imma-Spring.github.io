@@ -267,4 +267,5 @@ tr:hover {
 }
 .weight-container span {
   white-space: nowrap;
+  display: inline;
 }
