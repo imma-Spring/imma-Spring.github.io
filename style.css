@@ -265,4 +265,6 @@ tr:hover {
 #weight-unit {
   white-space: nowrap; /* keep unit together with preceding text */
 }
-
+.weight-container span {
+  white-space: nowrap;
+}
