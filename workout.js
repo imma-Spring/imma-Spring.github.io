@@ -55,6 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!exercise || pendingSets.length === 0) return;
 
     const newWorkout = {
+      id: Date.now(), // unique id
       date,
       exercise,
       sets: [...pendingSets] // stored internally in kg
@@ -82,7 +83,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (weightInput.value) {
       let val = parseFloat(weightInput.value);
       if (!isNaN(val)) {
-        weightInput.value = unit === "kg" ? (val / KG_TO_LB).toFixed(1) : (val * KG_TO_LB).toFixed(1);
+        weightInput.value =
+          unit === "kg"
+            ? (val / KG_TO_LB).toFixed(1)
+            : (val * KG_TO_LB).toFixed(1);
       }
     }
 
@@ -102,7 +106,25 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!workoutTableBody) return;
     workoutTableBody.innerHTML = "";
 
-    workouts.forEach((w, idx) => {
+    // If a date is picked, filter workouts
+    const filterDateInput = document.getElementById("history-date");
+    const filterDate = filterDateInput?.value || null;
+
+    const filteredWorkouts = filterDate
+      ? workouts.filter((w) => w.date === filterDate)
+      : workouts;
+
+    if (filteredWorkouts.length === 0) {
+      const tr = document.createElement("tr");
+      const td = document.createElement("td");
+      td.colSpan = 5;
+      td.textContent = "No workouts logged.";
+      tr.appendChild(td);
+      workoutTableBody.appendChild(tr);
+      return;
+    }
+
+    filteredWorkouts.forEach((w) => {
       const tr = document.createElement("tr");
       const total = w.sets.reduce((sum, s) => sum + s.reps * s.weight, 0);
       const convertedTotal = convertWeight(total);
@@ -110,23 +132,34 @@ document.addEventListener("DOMContentLoaded", () => {
       tr.innerHTML = `
         <td>${w.date}</td>
         <td>${w.exercise}</td>
-        <td>${w.sets.map(s => `${s.reps} reps @ ${convertWeight(s.weight)} ${unit}`).join("<br>")}</td>
+        <td>${w.sets
+          .map(
+            (s) => `${s.reps} reps @ ${convertWeight(s.weight)} ${unit}`
+          )
+          .join("<br>")}</td>
         <td>${convertedTotal} ${unit} total</td>
-        <td><button class="delete-btn" data-index="${idx}">❌</button></td>
+        <td><button class="delete-btn" data-id="${w.id}">❌</button></td>
       `;
       workoutTableBody.appendChild(tr);
     });
 
-    document.querySelectorAll(".delete-btn").forEach(btn => {
-      btn.addEventListener("click", e => {
-        const index = parseInt(e.target.dataset.index, 10);
-        workouts.splice(index, 1);
+    // re-attach delete button handlers
+    document.querySelectorAll(".delete-btn").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const id = parseInt(e.target.dataset.id, 10);
+        workouts = workouts.filter((w) => w.id !== id);
         localStorage.setItem(storageKey, JSON.stringify(workouts));
         renderTable();
         updateExerciseDropdown();
         if (exerciseSelect.value) renderChart(exerciseSelect.value);
       });
     });
+  }
+
+  // Hook up calendar filter
+  const historyDateInput = document.getElementById("history-date");
+  if (historyDateInput) {
+    historyDateInput.addEventListener("change", () => renderTable());
   }
 
   // --- Render Pending Sets ---
@@ -149,9 +182,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Update Exercise Dropdown ---
   function updateExerciseDropdown() {
     if (!exerciseSelect) return;
-    const exercises = [...new Set(workouts.map(w => w.exercise))];
+    const exercises = [...new Set(workouts.map((w) => w.exercise))];
     exerciseSelect.innerHTML = `<option value="">-- Select Exercise --</option>`;
-    exercises.forEach(ex => {
+    exercises.forEach((ex) => {
       const opt = document.createElement("option");
       opt.value = ex;
       opt.textContent = ex;
@@ -163,16 +196,18 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderChart(exercise) {
     if (!ctx) return;
     const data = workouts
-      .filter(w => w.exercise === exercise)
-      .sort((a,b) => new Date(a.date) - new Date(b.date));
+      .filter((w) => w.exercise === exercise)
+      .sort((a, b) => new Date(a.date) - new Date(b.date));
 
     if (data.length === 0) {
       if (chart) chart.destroy();
       return;
     }
 
-    const labels = data.map(w => w.date);
-    const values = data.map(w => w.sets.reduce((sum,s) => sum + s.reps * s.weight,0)).map(convertWeight);
+    const labels = data.map((w) => w.date);
+    const values = data
+      .map((w) => w.sets.reduce((sum, s) => sum + s.reps * s.weight, 0))
+      .map(convertWeight);
 
     const minVal = Math.min(...values);
     const suggestedMin = Math.floor(minVal / 10) * 10;
@@ -183,13 +218,15 @@ document.addEventListener("DOMContentLoaded", () => {
       type: "line",
       data: {
         labels,
-        datasets: [{
-          label: `${exercise} progression (${unit})`,
-          data: values,
-          borderColor: "blue",
-          fill: false,
-          tension: 0.2
-        }]
+        datasets: [
+          {
+            label: `${exercise} progression (${unit})`,
+            data: values,
+            borderColor: "blue",
+            fill: false,
+            tension: 0.2,
+          },
+        ],
       },
       options: {
         responsive: true,
@@ -198,23 +235,25 @@ document.addEventListener("DOMContentLoaded", () => {
             beginAtZero: false,
             suggestedMin,
             ticks: { stepSize: 10 },
-            title: { display: true, text: `Total Volume (${unit})` }
-          }
-        }
-      }
+            title: { display: true, text: `Total Volume (${unit})` },
+          },
+        },
+      },
     });
   }
 
   // --- Helpers ---
   function convertWeight(value) {
-    return unit === "kg" ? +value.toFixed(1) : +(value * KG_TO_LB).toFixed(1);
+    return unit === "kg"
+      ? +value.toFixed(1)
+      : +(value * KG_TO_LB).toFixed(1);
   }
 
   function updateUnitLabels() {
-    unitToggleBtn.textContent = `Switch to ${unit === "kg" ? "lb" : "kg"}`;
+    unitToggleBtn.textContent = `Switch to ${
+      unit === "kg" ? "lb" : "kg"
+    }`;
     if (weightUnitSpan) weightUnitSpan.textContent = unit;
-    const weightLabel = document.getElementById("weight-label");
-    if (weightLabel) weightLabel.textContent = `Weight (${unit})`;
   }
 });
 

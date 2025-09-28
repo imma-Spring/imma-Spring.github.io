@@ -2,12 +2,14 @@
   --bg-color: #121212;
   --text-color: #eaeaea;
   --link-color: #4da3ff;
+  --card-bg: rgba(30, 30, 30, 0.95);
 }
 
 body.light {
   --bg-color: #fafafa;
   --text-color: #222;
   --link-color: #0077cc;
+  --card-bg: rgba(250, 250, 250, 0.95);
 }
 
 /* =========================
@@ -15,20 +17,20 @@ body.light {
 ========================= */
 body {
   font-family: Arial, sans-serif;
-  max-width: 700px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 2rem;
-  background-color: rgba(18,18,18,0.95);
+  background-color: var(--bg-color);
   color: var(--text-color);
   transition: background 0.3s, color 0.3s;
 }
 
-body.light {
-  background-color: rgba(250,250,250,0.95);
-}
-
 header {
   margin-bottom: 2rem;
+}
+
+h1, h2 {
+  font-weight: 500;
 }
 
 nav {
@@ -62,6 +64,23 @@ button#theme-toggle:hover {
 }
 
 /* =========================
+   Calendar input
+========================= */
+#dateFilter {
+  margin: 1rem 0;
+  padding: 0.5rem 1rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: var(--card-bg);
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+body.light #dateFilter {
+  border-color: #ccc;
+}
+
+/* =========================
    Dropdown
 ========================= */
 .dropdown {
@@ -71,7 +90,7 @@ button#theme-toggle:hover {
 }
 
 .dropdown-btn {
-  background: var(--bg-color);
+  background: var(--card-bg);
   color: var(--text-color);
   border: 1px solid #555;
   border-radius: 6px;
@@ -91,12 +110,11 @@ body.light .dropdown-btn:hover {
   border-color: var(--link-color);
 }
 
-/* Dropdown menu hidden by default */
 .dropdown-menu {
   list-style: none;
   margin: 0;
   padding: 0;
-  background: var(--bg-color);
+  background: var(--card-bg);
   border: 1px solid #555;
   border-radius: 6px;
   position: absolute;
@@ -129,36 +147,6 @@ body.light .dropdown-menu li:hover {
 }
 
 /* =========================
-   Articles / posts
-========================= */
-article {
-  margin-bottom: 3rem;
-}
-
-h1, h2 {
-  font-weight: 500;
-}
-
-article p {
-  white-space: pre-wrap; /* preserves \n line breaks */
-}
-
-/* =========================
-   Links outside dropdown
-========================= */
-a:not(.dropdown a) {
-  color: inherit;
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.2s, transform 0.2s;
-}
-
-a:not(.dropdown a):hover {
-  color: #4da3ff;
-  transform: translateY(-2px);
-}
-
-/* =========================
    Tables
 ========================= */
 table {
@@ -166,11 +154,11 @@ table {
   border-collapse: collapse;
   margin: 1.5rem 0;
   font-size: 0.95rem;
-  background: var(--bg-color);
+  background: var(--card-bg);
   color: var(--text-color);
   border: 1px solid #555;
   border-radius: 8px;
-  overflow: hidden; /* keeps rounded corners */
+  overflow: hidden;
 }
 
 thead {
@@ -187,7 +175,7 @@ th, td {
   border-bottom: 1px solid #444;
 }
 
-body.light th, 
+body.light th,
 body.light td {
   border-bottom: 1px solid #ccc;
 }
@@ -197,15 +185,15 @@ th {
 }
 
 tr:nth-child(even) {
-  background: rgba(255,255,255,0.03);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 body.light tr:nth-child(even) {
-  background: rgba(0,0,0,0.03);
+  background: rgba(0, 0, 0, 0.03);
 }
 
 tr:hover {
-  background: rgba(77,163,255,0.1);
+  background: rgba(77, 163, 255, 0.1);
 }
 
 .delete-btn {
@@ -221,27 +209,31 @@ tr:hover {
   transform: scale(1.2);
   color: #ff7777;
 }
+
+/* =========================
+   Workout form
+========================= */
 .workout-form {
   display: flex;
-  flex-direction: column; /* stack main fields vertically */
+  flex-direction: column;
   gap: 1rem;
   padding: 1rem;
   border-radius: 8px;
   border: 1px solid #555;
-  background: var(--bg-color);
+  background: var(--card-bg);
   max-width: 500px;
 }
 
 .workout-form label {
   display: flex;
-  flex-direction: column; /* stack label text above input */
+  flex-direction: column;
   font-size: 0.95rem;
   color: var(--text-color);
 }
 
 #sets-container {
   display: flex;
-  flex-direction: column; /* stack each input and button vertically */
+  flex-direction: column;
   gap: 0.5rem;
 }
 
@@ -250,7 +242,7 @@ tr:hover {
 }
 
 #sets-container button {
-  align-self: flex-start; /* button aligned left under inputs */
+  align-self: flex-start;
   padding: 0.4rem 0.8rem;
   border: none;
   border-radius: 4px;
@@ -262,10 +254,39 @@ tr:hover {
 #sets-container button:hover {
   background: #338be6;
 }
+
 #weight-unit {
-  white-space: nowrap; /* keep unit together with preceding text */
+  white-space: nowrap;
 }
+
 .weight-container span {
   white-space: nowrap;
   display: inline;
 }
+
+/* =========================
+   Articles / posts
+========================= */
+article {
+  margin-bottom: 3rem;
+}
+
+article p {
+  white-space: pre-wrap;
+}
+
+/* =========================
+   Links outside dropdown
+========================= */
+a:not(.dropdown a) {
+  color: inherit;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s, transform 0.2s;
+}
+
+a:not(.dropdown a):hover {
+  color: var(--link-color);
+  transform: translateY(-2px);
+}
+
